@@ -1,0 +1,104 @@
+﻿@model PentiaCase.Web.ViewModels.SalesPersonDetailsViewModel
+
+@{
+    ViewData["Title"] = "Salesperson Details";
+    var person = Model.SalesPerson;
+}
+
+<div class="container mt-4">
+
+    <div class="mb-4">
+        <a asp-controller="SalesPersons"
+           asp-action="Index"
+           class="text-decoration-none">
+            &larr; Back to salespeople
+        </a>
+
+        <h1 class="mt-3">@person.Name</h1>
+        <p class="text-muted">
+            Salesperson information and order history.
+        </p>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0">Salesperson Information</h5>
+        </div>
+
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <strong>ID</strong>
+                    <div>@person.Id</div>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Hire Date</strong>
+                    <div>@person.HireDate</div>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Address</strong>
+                    <div>@person.Address</div>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>City</strong>
+                    <div>@person.City</div>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Zip Code</strong>
+                    <div>@person.ZipCode</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0">
+                Orders (@person.Orders.Count)
+            </h5>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Order ID</th>
+                            <th>Order Name</th>
+                            <th>Date</th>
+                            <th class="text-end pe-4">Price</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var order in person.Orders)
+                        {
+                            <tr>
+                                <td class="ps-4">@order.Id</td>
+                                <td>@order.OrderName</td>
+                                <td>@order.OrderDate</td>
+                                <td class="text-end pe-4">
+                                    @order.OrderPrice.ToString("N2")
+                                </td>
+                            </tr>
+                        }
+
+                        @if (!person.Orders.Any())
+                        {
+                            <tr>
+                                <td colspan="4"
+                                    class="text-center text-muted py-4">
+                                    No orders found.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

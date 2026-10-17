@@ -67,4 +67,10 @@ public class SalesPersonsController : Controller
 
         return View(viewModel);
     }
+
+    [Route("/Error")]
+    public IActionResult Error()
+    {
+        return View("~/Views/Shared/Error.cshtml");
+    }
 }
