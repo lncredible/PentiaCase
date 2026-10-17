@@ -1,4 +1,6 @@
 using PentiaCase.Web.Mappings;
+using PentiaCase.Web.Services;
+using PentiaCase.Web.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,26 @@ builder.Services.AddAutoMapper(
     cfg => { },
     typeof(MappingProfile)
 );
+
+builder.Services.AddHttpClient<IWingineersApiClient, WingineersApiClient>(
+    (serviceProvider, client) =>
+    {
+        var configuration =
+            serviceProvider.GetRequiredService<IConfiguration>();
+
+        var baseUrl = configuration["WingineersApi:BaseUrl"]
+            ?? throw new InvalidOperationException(
+                "Wingineers API BaseUrl is missing.");
+
+        var apiKey = configuration["WingineersApi:ApiKey"]
+            ?? throw new InvalidOperationException(
+                "Wingineers API key is missing.");
+
+        client.BaseAddress = new Uri(baseUrl);
+
+        client.DefaultRequestHeaders.Add("ApiKey", apiKey);
+        client.Timeout = TimeSpan.FromSeconds(30);
+    });
 
 var app = builder.Build();
 
