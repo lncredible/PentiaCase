@@ -33,6 +33,8 @@ builder.Services.AddHttpClient<IWingineersApiClient, WingineersApiClient>(
         client.Timeout = TimeSpan.FromSeconds(30);
     });
 
+builder.Services.AddScoped<ISalesPersonService, SalesPersonService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
