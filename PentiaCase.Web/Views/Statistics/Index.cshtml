@@ -1,0 +1,62 @@
+﻿@model List<PentiaCase.Web.ViewModels.MonthlyOrdersViewModel>
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Monthly Statistics";
+}
+
+<div class="container mt-4">
+    <div class="mb-4">
+        <h1>Monthly Order Statistics</h1>
+        <p class="text-muted">
+            Overview of order volumes by month.
+        </p>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0">Orders by Month</h5>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Year</th>
+                            <th>Month</th>
+                            <th class="text-end pe-4">Order Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var monthName = CultureInfo
+                            .GetCultureInfo("en-US")
+                            .DateTimeFormat
+                            .GetMonthName(item.Month);
+
+                            <tr>
+                                <td class="ps-4">@item.Year</td>
+                                <td>@monthName</td>
+                                <td class="text-end pe-4">
+                                    @item.OrderCount
+                                </td>
+                            </tr>
+                        }
+
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="3"
+                                    class="text-center text-muted py-4">
+                                    No order statistics available.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

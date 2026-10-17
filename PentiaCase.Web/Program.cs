@@ -34,6 +34,7 @@ builder.Services.AddHttpClient<IWingineersApiClient, WingineersApiClient>(
     });
 
 builder.Services.AddScoped<ISalesPersonService, SalesPersonService>();
+builder.Services.AddScoped<IOrderStatisticsService, OrderStatisticsService>();
 
 var app = builder.Build();
 
